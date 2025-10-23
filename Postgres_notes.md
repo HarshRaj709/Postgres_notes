@@ -36,6 +36,12 @@ CREATE USER admin WITH PASSWORD 'admin';
 GRANT ALL PRIVILEGES ON DATABASE scanner TO admin;
 ```
 
+# DB link
+```aiignore
+postgres://<USER>:<PASSWORD>@<HOST>:<PORT>/<DATABASE>
+
+```
+
 ## 📌 List All Users
 
 ```sql
