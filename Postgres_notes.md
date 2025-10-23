@@ -26,6 +26,13 @@ If your current user has the right DB permissions, you can run psql -U your_db_u
 \l
 ```
 
+# Create New DB / New User / New Role / New permissions grant
+```sql
+CREATE DATABASE scanner;
+CREATE USER scanner WITH PASSWORD 'scanner';
+GRANT ALL PRIVILEGES ON DATABASE scanner TO scanner;
+```
+
 ## 📌 List All Users
 ```sql
 \du
