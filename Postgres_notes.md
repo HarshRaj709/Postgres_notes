@@ -34,6 +34,8 @@ If your current user has the right DB permissions, you can run psql -U your_db_u
 CREATE DATABASE scanner;
 CREATE USER admin WITH PASSWORD 'admin';
 GRANT ALL PRIVILEGES ON DATABASE scanner TO admin;
+GRANT ALL PRIVILEGES ON SCHEMA public TO admin;
+ALTER SCHEMA public OWNER TO admin;
 ```
 
 # DB link
