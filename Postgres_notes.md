@@ -1,9 +1,11 @@
 # PostgreSQL Commands Guide
 
 ## 📌 Enter PostgreSQL Shell
+
 ```sh
 sudo -u postgres psql
 ```
+
 ```text
 sudo: Allows you to run commands with elevated (superuser/root) privileges.
 
@@ -27,23 +29,27 @@ If your current user has the right DB permissions, you can run psql -U your_db_u
 ```
 
 # Create New DB / New User / New Role / New permissions grant
+
 ```sql
 CREATE DATABASE scanner;
-CREATE USER scanner WITH PASSWORD 'scanner';
-GRANT ALL PRIVILEGES ON DATABASE scanner TO scanner;
+CREATE USER admin WITH PASSWORD 'admin';
+GRANT ALL PRIVILEGES ON DATABASE scanner TO admin;
 ```
 
 ## 📌 List All Users
+
 ```sql
 \du
 ```
 
 ## 📌 Grant All Privileges to a User
+
 ```sql
 GRANT ALL PRIVILEGES ON DATABASE "DB_NAME" TO username;
 ```
 
 ## 📌 Exit PostgreSQL Shell
+
 ```sql
 \q
 ```
@@ -53,26 +59,31 @@ GRANT ALL PRIVILEGES ON DATABASE "DB_NAME" TO username;
 ## 🚀 Outside PostgreSQL Environment
 
 ### ✅ Check PostgreSQL Connection
+
 ```sh
 psql -U username -d database_name -h localhost
 ```
 
 ### ✅ Check PostgreSQL Service Status
+
 ```sh
 sudo systemctl status postgresql
 ```
 
 ### ✅ Start PostgreSQL Service
+
 ```sh
 sudo systemctl start postgresql
 ```
 
 ### ✅ Stop PostgreSQL Service
+
 ```sh
 sudo systemctl stop postgresql
 ```
 
 ### ✅ Restart PostgreSQL Service
+
 ```sh
 sudo systemctl restart postgresql
 ```
@@ -82,21 +93,25 @@ sudo systemctl restart postgresql
 ## 📌 Database Management
 
 ### ✅ Create a Database
+
 ```sql
 CREATE DATABASE mydatabase;
 ```
 
 ### ✅ Delete a Database
+
 ```sql
 DROP DATABASE mydatabase;
 ```
 
 ### ✅ Connect to a Database
+
 ```sql
 \c mydatabase;
 ```
 
 ### ✅ Show Tables in a Database
+
 ```sql
 \dt
 ```
@@ -104,6 +119,7 @@ DROP DATABASE mydatabase;
 ### 📌 CRUD Operations
 
 ### ✅ Create a Table
+
 ```sql
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -113,39 +129,49 @@ CREATE TABLE users (
 ```
 
 ### ✅ See Schema of the Table
+
 ```
 \d users
 ```
 
 ### ✅ Insert Single Data into a Table
+
 ```sql
 INSERT INTO users (name, email) VALUES ('John Doe', 'john@example.com');
 ```
 
 ### ✅ Insert Multiple Data into a Table
+
 ```sql
 INSERT INTO users (name, email) VALUES ('John Doe', 'john@example.com'),('John Doe', 'john@example.com);
 ```
+
 ### Note:- If you are providing all data in the query in sequence then you can remove fields name from query
+
 ```
 INSERT INTO users VALUES ('John Doe', 'john@example.com'),('John Doe', 'john@example.com);
 ```
 
 ### ✅ View Table Data
+
 ```sql
 SELECT * FROM users;
 ```
-#### NOTE:- Here * represents columns like if you want to view only name then 
+
+#### NOTE:- Here * represents columns like if you want to view only name then
+
 ```sql
 SELECT name FROM users;
 ```
 
 ### ✅ Update content of table
+
 ```sql
 UPDATE users SET name='harsh' WHERE email = 'john@example.com';
 ```
 
 ### Update multiple rows at single time use CASE
+
 ```sql
 update persons
 SET age = CASE
@@ -158,11 +184,13 @@ WHERE NAME IN ('ashish','kamal','sunny','harsh');
 ```
 
 ### ✅ Delete Table Data
+
 ```sql
 DELETE FROM users WHERE id = 1;
 ```
 
 ### ✅ Delete a Table
+
 ```sql
 DROP TABLE users;
 ```
@@ -171,11 +199,12 @@ DROP TABLE users;
 
 ## 📌 Advance Database Management
 
-#### DATATYPE - 
+#### DATATYPE -
 
 ##### Numeric - INT, DOUBLE, DECIMAL, SMALLINT.....
 
 #### Constraints - Rule applied on a column.
+
         PRIMARY KEY, NOT NULL , DEFAULT, SERIAL , UNIQUE
 
 ```sql
@@ -195,6 +224,7 @@ CREATE TABLE advance (
     city VARCHAR(100) NOT NULL DEFAULT "LUCKNOW"
 );
 ```
+
 ---
 
 ### Update the columns of the tables
@@ -223,6 +253,7 @@ ALTER TABLE users ADD COLUMN age INT NOT NULL DEFAULT 18;
 ```
 
 ### Update Column Name
+
 ```sql
 ALTER TABLE users
 RENAME COLUMN id TO User_id;
@@ -231,12 +262,14 @@ RENAME COLUMN id TO User_id;
 # 📌 TABLE RELATED PSQL commands
 
 ## Change Table name
+
 ```sql
 ALTER TABLE employee
 RENAME TO employees;
 ```
 
 #### if want to change 2 things at same time then use ALTER 2 times
+
 ```sql
 ALTER TABLE employee 
 ALTER COLUMN salary TYPE DECIMAL(10,2),
@@ -244,17 +277,21 @@ ALTER COLUMN salary SET DEFAULT 30000;
 ```
 
 #### Need to use SET when changing Any constraints and TYPE when changing any DATA TYPE.
+
 ```SQL
 ALTER TABLE employee
 bankdb-# ALTER COLUMN hire_date SET NOT NULL,
 bankdb-# ALTER COLUMN hire_date SET DEFAULT CURRENT_DATE;
 ```
+
 ---
 
-### CLAUSES - 
+### CLAUSES -
+
 #### Order_by, Where, Distinct, Limit, Like
 
 1. Where
+
 ```sql
 SELECT fname FROM employee
 Where dept = 'IT';
@@ -319,7 +356,7 @@ SELECT * FROM employee
 ORDER BY fname;
 ```
 
-4.  DESCENDING ORDER
+4. DESCENDING ORDER
 
 ```sql
     SELECT * FROM employee
@@ -359,7 +396,6 @@ WHERE fname LIKE 'A%';          --- CASE SENSITIVE
     WHERE fname LIKE '_a%';      --- 2nd place have a
 ```
 
-
 ### AGGREGATE FUNCTION
 
 #### COUNT, SUM, AVERAGE, MIN, MAX
@@ -394,7 +430,7 @@ WHERE fname LIKE 'A%';          --- CASE SENSITIVE
     SELECT MAX(salary) FROM employee;           --- 500000.00
 ```
 
-## GROUP BY     -- COMBINE ENTITIES WITH SOME SIMILIARITY (“I want one row per group, and all the other selected columns must make sense within that group.”)
+## GROUP BY -- COMBINE ENTITIES WITH SOME SIMILIARITY (“I want one row per group, and all the other selected columns must make sense within that group.”)
 
 ```sql
 SELECT dept, COUNT(fname) AS total FROM employee --- TOTAL EMPLOYEE INDEPARTMENT          
@@ -446,9 +482,10 @@ GROUP BY dept;                                               dept | total
 ## STRING FUNCTIONS
 
 #### CONCAT, CONCAT_WS, SUBSTR, LEFT, RIGHT, LENGTH, UPPER, LOWER, TRIM, LTRIM, RTRIM,
+
 #### REPLACE, POSITION, STRING_AGG
 
-1. CONCAT       --- CONCAT(first_col, sec_col),    CONCAT(first_word, sec_word...)
+1. CONCAT --- CONCAT(first_col, sec_col), CONCAT(first_word, sec_word...)
 
 ```sql
 SELECT CONCAT(fname,lname) AS FULLNAME FROM employee;
@@ -475,19 +512,19 @@ SELECT fname || ' ' || lname AS full_name FROM employee;
     SELECT 'Post' || 'greSQL' AS result;
 ```
 
-2. CONCAT_WS  --- CONCAT WITH SEPERATOR  -- CONCAT_WS('-',fname,lname)
+2. CONCAT_WS --- CONCAT WITH SEPERATOR -- CONCAT_WS('-',fname,lname)
 
 ```sql
 SELECT CONCAT_WS(' ',fname,lname) AS FULLNAME FROM employee;
 ```
 
-3. SUBSTRING   -- SELECT SUBSTRING('HEY BUDDY,1,4); OR SELECT SUBSTR('HEY BUDDY,1,4);
+3. SUBSTRING -- SELECT SUBSTRING('HEY BUDDY,1,4); OR SELECT SUBSTR('HEY BUDDY,1,4);
 
 ```sql
 SELECT SUBSTR('HEY BUDDY',1,4);
 ```
 
-4. REPLACE   --- REPLACE(STR,FROM_STR,TO_STR)
+4. REPLACE --- REPLACE(STR,FROM_STR,TO_STR)
 
 ```sql
 SELECT REPLACE('Hey BUDDY','Hey','HELLO');
@@ -558,7 +595,7 @@ SELECT UPPER(*) FROM employee;
 SELECT LOWER(*) FROM employee;
 ```
 
-#### Want to chnage multiple columns then use 
+#### Want to chnage multiple columns then use
 
 ```sql
     SELECT UPPER(fname || ' ' || lname || ' - ' || dept) AS details FROM employee;
@@ -571,19 +608,20 @@ SELECT LEFT('HELLO WORLD',5);   ----  HELLO
 SELECT RIGHT('HELLO WORLD',5);   ----  WORLD
 ```
 
-9. TRIM         --- TO Remove Extra Space from starting and ending only
+9. TRIM --- TO Remove Extra Space from starting and ending only
 
 ```sql
 SELECT TRIM('  HARSH SAHU     !');   ----  HARSH SAHU     !
 ```
 
-10. POSITION   --- to find SUBSTR
+10. POSITION --- to find SUBSTR
 
 ```sql
 SELECT POSITION('om' IN 'thomas');
 ```
 
 ## Query Inside a Query --- can return all columns which passed the filter
+
 ```sql
 SELECT * FROM employee
 WHERE salary = (SELECT MAX(salary) FROM employee);
@@ -593,7 +631,6 @@ emp_id | fname | lname |         email          | dept |  salary   | hire_date
       3 | rahul | singh | myemail@gmail.com      | IT   | 500000.00 | 2025-04-02
       1 | harsh | rajpt | harshsahu709@gmail.com | HR   | 500000.00 | 2022-02-21
 ```
-
 
 # 📌 ADD CHECK CONSTRAINTS- TO verify something
 
@@ -624,6 +661,7 @@ ADD CONSTRAINT min_name_len CHECK (LENGTH(name)>4);
 ```
 
 ## DROP Constraint CHECk
+
 ```sql
 ALTER TABLE area
 DROP CONSTRAINT min_name_len;
@@ -652,6 +690,7 @@ DROP CONSTRAINT min_name_len;
 ```
 
 ### Multiple Conditions
+
 ```sql
     SELECT *,
     CASE
@@ -663,6 +702,7 @@ DROP CONSTRAINT min_name_len;
 ```
 
 ### ONLY SHOW TOTAL EMPLOYEES ACCORDING TO THEIR SALARY CATEGORY
+
 ```sql
     SELECT 
         CASE
@@ -681,6 +721,7 @@ DROP CONSTRAINT min_name_len;
 ```
 
 ### NEED TO CALCULATE BONUS WHICH IS 10% OF THEIR SALARY
+
 ```sql
     SELECT fullname,salary,ROUND(salary / 10,2) AS bonus
     FROM employees;                                     fullname |  salary   |  bonus   
@@ -696,6 +737,7 @@ DROP CONSTRAINT min_name_len;
 ```
 
 ### Update multiple rows at single time use CASE
+
 ```sql
     update persons
     SET age = CASE
@@ -707,32 +749,36 @@ DROP CONSTRAINT min_name_len;
     WHERE NAME IN ('ashish','kamal','sunny','harsh');
 ```
 
-
 # 📌 RELATIONSHIPS
 
 ## TYPES OF RELATIONSHIPS
+
     1. ONE-TO-ONE
     2. MANY-TO-ONE
     3. MANY-TO-MANY
 
 ### Link ONE-TO-MANY PSQL
- <a href="foreign.md">link</a> 
+
+<a href="foreign.md">link</a>
 
 ### LINK MANY-TO-MANY
+
 <a href="many.md">link</a>
 
 ---------------------------------------------------------------------------------------
 
 # 📌 Views
+
 What are Views in PostgreSQL?
 <br>
-A view in PostgreSQL is a virtual table based on the result of a SQL query. It behaves like a regular table in queries, but it doesn’t store data itself — it pulls fresh data each time it's queried.
+A view in PostgreSQL is a virtual table based on the result of a SQL query. It behaves like a regular table in queries,
+but it doesn’t store data itself — it pulls fresh data each time it's queried.
 
 ## Access all views of the db
+
 ```sql
 \dv
 ```
-
 
 ```sql
 CREATE VIEW billing AS
@@ -800,6 +846,7 @@ HAVING SUM(total_price) > 800;                       p_name |    sum
 # 📌 GROUP BY ROLLUP : To add total of column
 
 ## COALESCE is a SQL function that returns the first non-null value from a list of expressions.
+
 ```sql
 SELECT COALESCE(NULL, NULL, 'Hello', 'World');
 -- Output: 'Hello'
@@ -822,11 +869,13 @@ GROUP BY
 ```
 
 # 📌 STORED ROUTINE : These are sets of SQL statements that are saved in the database and can be executed repeatedly. They're useful for encapsulating complex logic, reusing code, improving performance, and enforcing business rules
+
 <br>
 
 # 1. Stored Procedure: Set of SQL statements and procedural logic that can perform operations such as inserting, updating, deleting, and querying data.
 
 ## SYNTAX
+
 ```sql
 CREATE OR REPLACE PROCEDURE procedure_name (parameter_name,parameter_type,..)
 LANGUAGE plpgsql
@@ -889,16 +938,19 @@ $$;
 ```
 
 ## Use it using call
+
 ```sql
 CALL update_price(4,300);
 ```
 
 ## To DROP PROCEDURE
+
 ```sql
 DROP PROCEDURE update_price(integer,numeric);
 ```
 
 ## List all procedures
+
 ```sql
 SELECT proname 
 FROM pg_proc 
@@ -936,7 +988,9 @@ GROUP BY dept;                                                   dept |    max
                                                                 IT   | 500000.00
                                                                 HR   | 500000.00
 ```
+
 ## Problem with this cannot write this multiple times so use user defined function
+
 ```sql
 SELECT 
     emp_id,
@@ -953,7 +1007,9 @@ AND salary = (
                                                         1 | harsh | 500000.00
 
 ```
+
 ## List all functions
+
 ```sql
 \df
 ```
@@ -985,6 +1041,7 @@ LANGUAGE plpgsql;                                    emp_id | fname |  salary
 ```
 
 ## CALL FUNCTION
+
 ```sql
 SELECT * FROM max_sal_emp1('IT');
 ```
@@ -1020,6 +1077,7 @@ FROM employees;                                             fname  |  salary   |
                                                             Vikram |  89000.00 | 1680000.00
                                                             Sneha  |  54000.00 | 1680000.00
 ```
+
 ## Running Calculation
 
 ```sql
@@ -1038,6 +1096,7 @@ SELECT fname, salary, SUM(salary)
 ```
 
 ### ROW NUMBER()
+
 ```sql
 SELECT ROW_NUMBER() OVER(),
     fname,dept,salary, SUM(salary)
@@ -1089,6 +1148,7 @@ SELECT
 # TRIGGERS: Triggers are special procedures in a database that automatically execute predefined actions in resonse to certain events on a specified table or view.
 
 ## SYNTAX
+
 ```sql
 CREATE TRIGGER trigger_name
 {BEFORE | AFTER | INSTEAD OF } { INSERT | UPDATE | DELETE | TRUNCATE }
@@ -1098,6 +1158,7 @@ EXECUTIVE FUNCTION trigger_fuction_name();
 ```
 
 ##
+
 ```sql
 CREATE OR REPLACE FUNCTION trigger_function_name()
 RETURNS TRIGGER AS $$
@@ -1109,11 +1170,13 @@ $$ LANGUAGE plpgsql;
 ```
 
 ## Use Case
+
 ```text
 Create a trigger so that if we insert/update negative salary in a table, it will be triggered amd set it to 0.
 ```
 
 ## Example
+
 ```sql
 CREATE OR REPLACE FUNCTION check_salary()
     RETURNS TRIGGER AS $$
@@ -1127,6 +1190,7 @@ CREATE OR REPLACE FUNCTION check_salary()
 ```
 
 ## CREATE TRIGGER before_update_salary
+
 ```sql
 CREATE TRIGGER before_update_salary
 BEFORE UPDATE ON employees
@@ -1134,25 +1198,28 @@ FOR EACH ROW
 EXECUTE FUNCTION check_salary();
 ```
 
-
 # 📌 User Management
 
 ### ✅ Create a New User
+
 ```sql
 CREATE USER new_user WITH PASSWORD 'password';
 ```
 
 ### ✅ Grant Privileges to a User
+
 ```sql
 GRANT ALL PRIVILEGES ON DATABASE mydatabase TO new_user;
 ```
 
 ### ✅ Change User Password
+
 ```sql
 ALTER USER new_user WITH PASSWORD 'new_password';
 ```
 
 ### ✅ Delete a User
+
 ```sql
 DROP USER new_user;
 ```
@@ -1162,11 +1229,13 @@ DROP USER new_user;
 ## 📌 Backup & Restore
 
 ### ✅ Backup a Database
+
 ```sh
 pg_dump -U username -d database_name -f backup.sql
 ```
 
 ### ✅ Restore a Database
+
 ```sh
 psql -U username -d database_name -f backup.sql
 ```
@@ -1176,11 +1245,13 @@ psql -U username -d database_name -f backup.sql
 ## 📌 Logs & Debugging
 
 ### ✅ View PostgreSQL Logs
+
 ```sh
 sudo journalctl -u postgresql --no-pager | tail -n 50
 ```
 
 ### ✅ Check Active Connections
+
 ```sql
 SELECT * FROM pg_stat_activity;
 ```
