@@ -440,6 +440,8 @@ WHERE fname LIKE 'A%';          --- CASE SENSITIVE
 
 ## GROUP BY -- COMBINE ENTITIES WITH SOME SIMILIARITY (“I want one row per group, and all the other selected columns must make sense within that group.”)
 
+### Every column in SELECT must be either: in GROUP BY, OR inside an aggregate function
+
 ```sql
 SELECT dept, COUNT(fname) AS total FROM employee --- TOTAL EMPLOYEE INDEPARTMENT          
 GROUP BY dept;                                               dept | total 
