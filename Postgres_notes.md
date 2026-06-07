@@ -603,7 +603,13 @@ SELECT LENGTH(fname) FROM employee;             ---
 7. UPPER and LOWER
 
 ```sql
-SELECT UPPER(*) FROM employee;
+SELECT UPPER(fname) FROM employee;
+```
+
+```sql
+SELECT UPPER(fname),
+    UPPER(dept)
+FROM employee;
 ```
 
 ```sql
