@@ -238,7 +238,12 @@ CREATE TABLE advance (
 ### Update the columns of the tables
 
 ```sql
-ALTER TABLE users ALTER COLUMN fname VARCHAR(50) NOT NULL;
+ALTER TABLE users ALTER COLUMN EMAIL TYPE VARCHAR(50);
+```
+
+```sql
+ALTER TABLE users
+ALTER COLUMN email SET NOT NULL;
 ```
 
 ```SQL
