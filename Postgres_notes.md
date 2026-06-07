@@ -840,7 +840,7 @@ GROUP BY p_name;                                  p_name  |    sum
 
 # 📌 HAVING CLAUSE
 
-## Filtering using WHERE will not work with GROUP BY  use HAVING to apply condition
+## Filtering using WHERE will not work with Aggregate use HAVING to apply condition
 
 ```sql
 SELECT p_name, SUM(total_price)
